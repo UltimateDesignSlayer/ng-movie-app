@@ -1,0 +1,42 @@
+// @include breakpoint-max($breakpoint-xs-max) {
+//   .ma-navbar {
+//     background-color: blue;
+//   }
+// }
+
+.ma-navbar {
+  background: $color-blue1;
+  border-color: $color-blue1;
+  border-bottom: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  color: $color-white;
+}
+
+.navbar-default {
+  .navbar-toggle {
+    border-color: $color-white;
+
+    &:hover, &:focus {
+      background-color: $color-blue5;
+    }
+
+    .icon-bar {
+      background-color: $color-white;
+    }
+  }
+  .navbar-brand {
+    color: $color-white;
+
+    &:hover, &:focus {
+      color: $color-white;
+    }
+  }
+  .navbar-nav > li > a {
+    color: $color-white;
+    &:hover, &:focus {
+      color: $color-white;
+      background-color: $color-blue5;
+    }
+  }
+}
