@@ -1,8 +1,28 @@
-<form>
-  <div class="input-group ma-search-bar">
-    <input type="text" class="form-control ma-search-bar__input" placeholder="Search..." />
-    <span class="input-group-btn">
-      <button class="btn btn-primary ma-search-bar__button" type="button"><span class="glyphicon glyphicon-search"></span></button>
-    </span>
+<div class="ma-search">
+  <div class="container">
+    <div class="row ma-search-close-button-wrapper">
+      <div class="ma-search-close-button" ng-if="isSearchActive" ng-click="searchActive(false)">
+        <span class="glyphicon glyphicon-remove ma-search-close-button__icon"></span>
+      </div>
+    </div>
+    <form class="row" ng-submit="searchGet($event)">
+      <div class="input-group ma-search-bar col-xs-12">
+        <input type="text" class="form-control ma-search-bar__input" ng-model="searchQuery" placeholder="Search..." ng-focus="searchActive(true)" />
+        <span class="input-group-btn">
+          <button class="btn btn-primary ma-search-bar__button" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+      </div>
+    </form>
+    <div class="row" ng-if="isSearchActive">
+      <ul class="search-results-list">
+        <li class="search-results-list-item" ng-repeat="result in searchResults" ng-click="selectResult(result.id, result.media_type)">
+          <img
+            ng-src="{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}"
+            ng-if="result.poster_path || result.profile_path"
+            alt="{{result.title || result.name}}" />
+          - {{result.title || result.name}} - {{result.media_type}}
+        </li>
+      </ul>
+    </div>
   </div>
-</form>
+</div>

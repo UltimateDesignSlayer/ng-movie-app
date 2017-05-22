@@ -4,7 +4,7 @@ import NavMenuComponent from './navMenu';
 function HeaderComponent(app){
   SearchComponent.SearchComponent(app); //Child component of header
   NavMenuComponent.NavMenuComponent(app); //Child component of header
-  app.controller('HeaderController', ['$scope', function($scope){
+  app.movieApp.controller('HeaderController', ['$scope', function($scope){
 
   }])
   .directive('headerDirective', function(){

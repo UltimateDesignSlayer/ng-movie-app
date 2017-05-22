@@ -1,12 +1,21 @@
 # ng-movie-app
 Movie info app using TMDb
 
-# UPDATE extract-text-webpack-plugin
-
 ## Getting started
 - run `npm install`
 - run `node server.js` to start server. Access via http://localhost:1234
 - run webpack --watch to start watcher
+
+## Dependancies
+See package.json.
+
+Webpack 2 for bundling and sass compilation.
+Express js for the server.
+
+#### Libraries/Frameworks
+Bootstrap - to build out a decent looking UI quickly
+Jquery - for bootstrap.
+Angular - for handling data and state management.
 
 ## To Do
 ### Compare movies feature?

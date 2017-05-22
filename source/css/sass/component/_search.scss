@@ -1,3 +1,34 @@
+.ma-search {
+  &--search-state {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $color-white;
+    opacity: 0.95;
+  }
+
+  .ma-search-close-button-wrapper {
+    text-align: center;
+  }
+
+  .ma-search-close-button {
+    height: 51px;
+
+    &__icon {
+      font-size: 40px;
+      position: relative;
+      top: 5px;
+      cursor: pointer;
+      color: $color-blue1;
+    }
+    &__icon:hover {
+      color: $color-blue5;
+    }
+  }
+}
+
 .ma-search-bar {
   &__input, &__button {
     font-size: 20px;

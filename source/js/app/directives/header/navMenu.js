@@ -1,5 +1,5 @@
 function NavMenuComponent(app) {
-  app.controller('NavMenuController', ['$scope', function($scope){
+  app.movieApp.controller('NavMenuController', ['$scope', function($scope){
     $scope.menuItems = [
       {
         name: 'Home'
