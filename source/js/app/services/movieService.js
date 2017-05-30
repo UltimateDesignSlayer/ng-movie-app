@@ -1,19 +1,33 @@
-function MovieService(app) {
-  return app.movieApp.factory('movieService', ['$http', function($http) {
-    function searchResultsRequest(query) {
-      $http.get('https://api.themoviedb.org/3/search/movie?api_key=' + app.apiKey + '&query=' + query)
-        .then(function(response) {
-          console.log(response.data);
-          return response.data;
-        });
-    }
-
-    return {
-      getSearchResults: function(query) {
-        return searchResultsRequest(query);
-      }
-    };
-  }]);
+const getSearchResults = (app, query, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/search/multi?api_key=' + app.apiKey + '&query=' + query,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
 }
 
-export default {MovieService};
+const getItemData = (app, id, type, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+export default {getSearchResults, getItemData};

@@ -1,3 +1,5 @@
+import MovieServices from '../../services/movieService';
+
 function SearchComponent(app){
 
   app.movieApp.controller('SearchController', ['$scope', '$http', function($scope, $http){
@@ -17,31 +19,28 @@ function SearchComponent(app){
       }
     }
 
-    // selectResult, searchResultGet and searchGet need to go into a service. Might be reused in the compare page.
-    function searchResultGet(query) {
-      //MULTI search: this searches movies, tv-shows and people
-      $http.get('https://api.themoviedb.org/3/search/multi?api_key=' + app.apiKey + '&query=' + query)
-        .then(function(response) {
-          $scope.searchResults = response.data.results;
-          $scope.searchResultImgPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0];
-          console.log($scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0] + response.data.results[0].poster_path);
-
-          // return response.data;
-        });
-    }
-
     $scope.searchGet = function() {
-      searchResultGet($scope.searchQuery);
+      MovieServices.getSearchResults(app, $scope.searchQuery, (results) => {
+        $scope.searchResults = results.results;
+        $scope.searchResultImgPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0];
+        $scope.$apply(); // refresh
+      });
     }
 
     $scope.selectResult = function(id, type) {
-      //Get full data of movie/tv show/person clicked in results
-      $http.get('https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey)
-        .then(function(response) {
-          console.log(response);
-          $scope.searchActive(false);
-          // return response.data;
-        });
+      MovieServices.getItemData(app, id, type, (item) => {
+        console.log(item);
+        $scope.searchActive(false);
+        $scope.$apply(); // refresh
+      });
+
+      // //Get full data of movie/tv show/person clicked in results
+      // $http.get('https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey)
+      //   .then(function(response) {
+      //     console.log(response);
+      //     $scope.searchActive(false);
+      //     // return response.data;
+      //   });
     }
   }])
   .directive('searchDirective', function(){
