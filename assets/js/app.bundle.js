@@ -161,7 +161,7 @@ module.exports = "<nav class=\"navbar navbar-default ma-navbar\">\n  <div class=
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ma-search\">\n  <div class=\"container\">\n    <div class=\"row ma-search-close-button-wrapper\">\n      <div class=\"ma-search-close-button\" ng-if=\"isSearchActive\" ng-click=\"searchActive(false)\">\n        <span class=\"glyphicon glyphicon-remove ma-search-close-button__icon\"></span>\n      </div>\n    </div>\n    <form class=\"row\" ng-submit=\"searchGet($event)\">\n      <div class=\"input-group ma-search-bar col-xs-12\">\n        <input type=\"text\" class=\"form-control ma-search-bar__input\" ng-model=\"searchQuery\" placeholder=\"Search...\" ng-focus=\"searchActive(true)\" />\n        <span class=\"input-group-btn\">\n          <button class=\"btn btn-primary ma-search-bar__button\" type=\"submit\"><span class=\"glyphicon glyphicon-search\"></span></button>\n        </span>\n      </div>\n    </form>\n    <div class=\"row\" ng-if=\"isSearchActive\">\n      <ul class=\"search-results-list\">\n        <li class=\"search-results-list-item\" ng-repeat=\"result in searchResults\" ng-click=\"selectResult(result.id, result.media_type)\">\n          <img\n            ng-src=\"{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}\"\n            ng-if=\"result.poster_path || result.profile_path\"\n            alt=\"{{result.title || result.name}}\" />\n          - {{result.title || result.name}} - {{result.media_type}}\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class=\"ma-search\">\n  <div class=\"container\">\n    <div class=\"row ma-search-close-button-wrapper\">\n      <div class=\"ma-search-close-button\" ng-if=\"isSearchActive\" ng-click=\"searchActive(false)\">\n        <span class=\"glyphicon glyphicon-remove ma-search-close-button__icon\"></span>\n      </div>\n    </div>\n    <form class=\"row\" ng-submit=\"searchGet($event)\">\n      <div class=\"input-group ma-search-bar col-xs-12\">\n        <input type=\"text\" class=\"form-control ma-search-bar__input\" ng-model=\"searchQuery\" placeholder=\"Search...\" ng-focus=\"searchActive(true)\" />\n        <span class=\"input-group-btn\">\n          <button class=\"btn btn-primary ma-search-bar__button\" type=\"submit\"><span class=\"glyphicon glyphicon-search\"></span></button>\n        </span>\n      </div>\n    </form>\n    <div class=\"row\" ng-if=\"isSearchActive\">\n      <ul class=\"search-results-list\">\n        <li class=\"search-results-list-item\" ng-repeat=\"result in searchResults\" ui-sref=\"details\" ng-click=\"selectResult(result.id, result.media_type)\">\n          <img\n            ng-src=\"{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}\"\n            ng-if=\"result.poster_path || result.profile_path\"\n            alt=\"{{result.title || result.name}}\" />\n          - {{result.title || result.name}} - {{result.media_type}}\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 7 */
@@ -206,17 +206,20 @@ function NavMenuComponent(app) {
 
 function SearchComponent(app){
 
-  app.movieApp.controller('SearchController', ['$scope', '$http', function($scope, $http){
+  app.movieApp.controller('SearchController', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http){
+    $rootScope.currentItemDetails = {};
 
     $scope.searchActive = function(isFocus) {
       var $searchWrapper = $('.ma-search');
       if(isFocus) {
         $searchWrapper.addClass('ma-search--search-state');
+        $(document.body).addClass('search-active');
         $scope.isSearchActive = true;
       }
 
       if(!isFocus) {
         $searchWrapper.removeClass('ma-search--search-state');
+        $(document.body).removeClass('search-active');
         $scope.searchQuery = '';
         $scope.searchResults = [];
         $scope.isSearchActive = false;
@@ -233,7 +236,10 @@ function SearchComponent(app){
 
     $scope.selectResult = function(id, type) {
       __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getItemData(app, id, type, (item) => {
-        console.log(item);
+        $rootScope.currentItemDetails = item;
+        $rootScope.currentItemDetails.type = type;
+        console.log($rootScope.currentItemDetails);
+        $scope.$broadcast('detailsSet', $rootScope.currentItemDetails);
         $scope.searchActive(false);
         $scope.$apply(); // refresh
       });
@@ -358,7 +364,7 @@ function ContentComponents(app) {
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content\">\n  <h1>{{title}}</h1>\n  <h2>test</h2>\n</div>\n";
+module.exports = "<div class=\"content\" ng-if=\"details\">\n  <div class=\"row\">\n    <div class=\"jumbotron\">\n      <img ng-if=\"details.backdrop_path\" ng-src=\"{{backdropImg}}\" />\n      <h1>{{title}}</h1>\n    </div>\n\n  </div>\n\n\n  <p>\n    {{details.type}}\n  </p>\n  <p>\n    {{summary}}\n  </p>\n</div>\n";
 
 /***/ }),
 /* 20 */
@@ -372,8 +378,19 @@ module.exports = "<h1>{{title}}</h1>\n\n<p>\n  This is the homepage!!\n</p>\n";
 
 "use strict";
 function DetailsComponent(app) {
-  app.movieApp.controller('DetailsController', ['$scope', function($scope){
-    $scope.title = "Yeah";
+  app.movieApp.controller('DetailsController', ['$scope', '$rootScope', function($scope, $rootScope){
+
+
+    $scope.$on('detailsSet', function (event, details) {
+
+      console.log($scope.tmdbConfig.data.images.still_sizes);
+      $scope.details = details;
+      $scope.type = details.type; //movie, tv or person
+      $scope.title = details.title || details.original_name || details.name; //different prop depending on type: person, movie or tv.
+      $scope.summary = details.overview;
+      $scope.backdropImg = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[3] + details.backdrop_path;
+    });
+
   }])
   .directive('detailsDirective', function(){
     return {

@@ -87,3 +87,6 @@
   .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #fff;
     background-color: #144AC6; }
+
+body.search-active main.container {
+  margin-top: 40px; }

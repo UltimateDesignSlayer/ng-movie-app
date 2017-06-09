@@ -15,7 +15,7 @@
     </form>
     <div class="row" ng-if="isSearchActive">
       <ul class="search-results-list">
-        <li class="search-results-list-item" ng-repeat="result in searchResults" ng-click="selectResult(result.id, result.media_type)">
+        <li class="search-results-list-item" ng-repeat="result in searchResults" ui-sref="details" ng-click="selectResult(result.id, result.media_type)">
           <img
             ng-src="{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}"
             ng-if="result.poster_path || result.profile_path"

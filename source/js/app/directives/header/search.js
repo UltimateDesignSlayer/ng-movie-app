@@ -2,17 +2,20 @@ import MovieServices from '../../services/movieService';
 
 function SearchComponent(app){
 
-  app.movieApp.controller('SearchController', ['$scope', '$http', function($scope, $http){
+  app.movieApp.controller('SearchController', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http){
+    $rootScope.currentItemDetails = {};
 
     $scope.searchActive = function(isFocus) {
       var $searchWrapper = $('.ma-search');
       if(isFocus) {
         $searchWrapper.addClass('ma-search--search-state');
+        $(document.body).addClass('search-active');
         $scope.isSearchActive = true;
       }
 
       if(!isFocus) {
         $searchWrapper.removeClass('ma-search--search-state');
+        $(document.body).removeClass('search-active');
         $scope.searchQuery = '';
         $scope.searchResults = [];
         $scope.isSearchActive = false;
@@ -29,7 +32,10 @@ function SearchComponent(app){
 
     $scope.selectResult = function(id, type) {
       MovieServices.getItemData(app, id, type, (item) => {
-        console.log(item);
+        $rootScope.currentItemDetails = item;
+        $rootScope.currentItemDetails.type = type;
+        console.log($rootScope.currentItemDetails);
+        $scope.$broadcast('detailsSet', $rootScope.currentItemDetails);
         $scope.searchActive(false);
         $scope.$apply(); // refresh
       });

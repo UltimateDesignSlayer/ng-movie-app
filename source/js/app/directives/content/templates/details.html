@@ -1,4 +1,17 @@
-<div class="content">
-  <h1>{{title}}</h1>
-  <h2>test</h2>
+<div class="content" ng-if="details">
+  <div class="row">
+    <div class="jumbotron">
+      <img ng-if="details.backdrop_path" ng-src="{{backdropImg}}" />
+      <h1>{{title}}</h1>
+    </div>
+
+  </div>
+
+
+  <p>
+    {{details.type}}
+  </p>
+  <p>
+    {{summary}}
+  </p>
 </div>
