@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,7 +84,7 @@
 
 "use strict";
 var appConfig = {
-  movieApp: angular.module('movieApp', []),
+  movieApp: angular.module('movieApp', ['ui.router']),
   apiKey: '6eec2a195b8611ad792849889f58cbc1',
   masterController: function() {
     this.movieApp.controller('MasterController', ['$scope', '$http', function($scope, $http){
@@ -96,7 +96,32 @@ var appConfig = {
           console.log("TMDB API config received. ", response)
         });
 
-    }])
+    }]);
+
+    this.movieApp.config(function($stateProvider) {
+      var details = {
+        name: 'details',
+        url: '/details',
+        template: '<details-directive></details-directive>'
+      }
+
+      var home = {
+        name: 'home',
+        url: '/',
+        template: '<home-directive></home-directive>'
+      }
+
+      // If not found, just send user to homepage.
+      var catchAll = {
+        name: 'catchAll',
+        url: '{path:.*}',
+        template: '<home-directive></home-directive>'
+      }
+
+      $stateProvider.state(details);
+      $stateProvider.state(home);
+      $stateProvider.state(catchAll);
+    });
   }
 }
 
@@ -108,8 +133,8 @@ var appConfig = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__search__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__navMenu__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__search__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__navMenu__ = __webpack_require__(7);
 
 
 
@@ -152,16 +177,10 @@ module.exports = "<nav class=\"navbar navbar-default ma-navbar\">\n  <div class=
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav navbar-nav navbar-right\">\n  <li ng-repeat=\"item in menuItems\"><a href=\"#\">{{item.name}}</a></li>\n</ul>\n";
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
 module.exports = "<div class=\"ma-search\">\n  <div class=\"container\">\n    <div class=\"row ma-search-close-button-wrapper\">\n      <div class=\"ma-search-close-button\" ng-if=\"isSearchActive\" ng-click=\"searchActive(false)\">\n        <span class=\"glyphicon glyphicon-remove ma-search-close-button__icon\"></span>\n      </div>\n    </div>\n    <form class=\"row\" ng-submit=\"searchGet($event)\">\n      <div class=\"input-group ma-search-bar col-xs-12\">\n        <input type=\"text\" class=\"form-control ma-search-bar__input\" ng-model=\"searchQuery\" placeholder=\"Search...\" ng-focus=\"searchActive(true)\" />\n        <span class=\"input-group-btn\">\n          <button class=\"btn btn-primary ma-search-bar__button\" type=\"submit\"><span class=\"glyphicon glyphicon-search\"></span></button>\n        </span>\n      </div>\n    </form>\n    <div class=\"row\" ng-if=\"isSearchActive\">\n      <ul class=\"search-results-list\">\n        <li class=\"search-results-list-item\" ng-repeat=\"result in searchResults\" ng-click=\"selectResult(result.id, result.media_type)\">\n          <img\n            ng-src=\"{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}\"\n            ng-if=\"result.poster_path || result.profile_path\"\n            alt=\"{{result.title || result.name}}\" />\n          - {{result.title || result.name}} - {{result.media_type}}\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -169,10 +188,12 @@ function NavMenuComponent(app) {
   app.movieApp.controller('NavMenuController', ['$scope', function($scope){
     $scope.menuItems = [
       {
-        name: 'Home'
+        name: 'Home',
+        sref: 'home'
       },
       {
-        name: 'Reviews'
+        name: 'Reviews',
+        sref: 'details'
       },
       {
         name: 'Compare'
@@ -183,7 +204,7 @@ function NavMenuComponent(app) {
   .directive('navMenu', function(){
     return {
       controller: 'NavMenuController',
-      template: __webpack_require__(6)
+      template: __webpack_require__(17)
     }
   });
 }
@@ -192,10 +213,13 @@ function NavMenuComponent(app) {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_movieService__ = __webpack_require__(9);
+
+
 function SearchComponent(app){
 
   app.movieApp.controller('SearchController', ['$scope', '$http', function($scope, $http){
@@ -215,37 +239,34 @@ function SearchComponent(app){
       }
     }
 
-    // selectResult, searchResultGet and searchGet need to go into a service. Might be reused in the compare page.
-    function searchResultGet(query) {
-      //MULTI search: this searches movies, tv-shows and people
-      $http.get('https://api.themoviedb.org/3/search/multi?api_key=' + app.apiKey + '&query=' + query)
-        .then(function(response) {
-          $scope.searchResults = response.data.results;
-          $scope.searchResultImgPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0];
-          console.log($scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0] + response.data.results[0].poster_path);
-
-          // return response.data;
-        });
-    }
-
     $scope.searchGet = function() {
-      searchResultGet($scope.searchQuery);
+      __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getSearchResults(app, $scope.searchQuery, (results) => {
+        $scope.searchResults = results.results;
+        $scope.searchResultImgPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[0];
+        $scope.$apply(); // refresh
+      });
     }
 
     $scope.selectResult = function(id, type) {
-      //Get full data of movie/tv show/person clicked in results
-      $http.get('https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey)
-        .then(function(response) {
-          console.log(response);
-          $scope.searchActive(false);
-          // return response.data;
-        });
+      __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getItemData(app, id, type, (item) => {
+        console.log(item);
+        $scope.searchActive(false);
+        $scope.$apply(); // refresh
+      });
+
+      // //Get full data of movie/tv show/person clicked in results
+      // $http.get('https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey)
+      //   .then(function(response) {
+      //     console.log(response);
+      //     $scope.searchActive(false);
+      //     // return response.data;
+      //   });
     }
   }])
   .directive('searchDirective', function(){
     return {
       controller: 'SearchController',
-      template: __webpack_require__(7)
+      template: __webpack_require__(6)
     }
   });
 };
@@ -254,8 +275,47 @@ function SearchComponent(app){
 
 
 /***/ }),
-/* 10 */,
-/* 11 */
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const getSearchResults = (app, query, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/search/multi?api_key=' + app.apiKey + '&query=' + query,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+const getItemData = (app, id, type, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData});
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -264,6 +324,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_bootstrap_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__lib_bootstrap_min__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_directives_header_header__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_directives_content_content__ = __webpack_require__(18);
+
+
 
 
 
@@ -272,10 +335,93 @@ __WEBPACK_IMPORTED_MODULE_1__app_app__["a" /* default */].appConfig.masterContro
 
 //Components
 __WEBPACK_IMPORTED_MODULE_2__app_directives_header_header__["a" /* default */].HeaderComponent(__WEBPACK_IMPORTED_MODULE_1__app_app__["a" /* default */].appConfig);
+__WEBPACK_IMPORTED_MODULE_3__app_directives_content_content__["a" /* default */].ContentComponents(__WEBPACK_IMPORTED_MODULE_1__app_app__["a" /* default */].appConfig);
 
 
 __webpack_require__(1);
 __webpack_require__(0);
+
+
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = "<ul class=\"nav navbar-nav navbar-right\">\n  <li ng-repeat=\"item in menuItems\"><a ui-sref=\"{{item.sref}}\">{{item.name}}</a></li>\n</ul>\n";
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home__ = __webpack_require__(22);
+
+
+
+function ContentComponents(app) {
+  __WEBPACK_IMPORTED_MODULE_0__details__["a" /* default */].DetailsComponent(app);
+  __WEBPACK_IMPORTED_MODULE_1__home__["a" /* default */].HomeComponent(app);
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({ContentComponents});
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"content\">\n  <h1>{{title}}</h1>\n  <h2>test</h2>\n</div>\n";
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>{{title}}</h1>\n\n<p>\n  This is the homepage!!\n</p>\n";
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function DetailsComponent(app) {
+  app.movieApp.controller('DetailsController', ['$scope', function($scope){
+    $scope.title = "Yeah";
+  }])
+  .directive('detailsDirective', function(){
+    return {
+      controller: 'DetailsController',
+      template: __webpack_require__(19)
+    }
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({DetailsComponent});
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function HomeComponent(app){
+  app.movieApp.controller('HomeController', ['$scope', function($scope){
+    $scope.title = "HOMEPAGE";
+  }])
+  .directive('homeDirective', function(){
+    return {
+      controller: 'HomeController',
+      template: __webpack_require__(20)
+    }
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({HomeComponent});
 
 
 /***/ })

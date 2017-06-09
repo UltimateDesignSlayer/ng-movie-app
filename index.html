@@ -9,6 +9,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="js/app.bundle.js"></script>
   </head>
 
@@ -18,7 +19,7 @@
         <div header-directive class="row"></div>
       </header>
       <main class="container">
-        <div class="row"></div>
+        <ui-view></ui-view>
       </main>
       <footer>
 

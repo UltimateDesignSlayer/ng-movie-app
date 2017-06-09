@@ -2,10 +2,12 @@ function NavMenuComponent(app) {
   app.movieApp.controller('NavMenuController', ['$scope', function($scope){
     $scope.menuItems = [
       {
-        name: 'Home'
+        name: 'Home',
+        sref: 'home'
       },
       {
-        name: 'Reviews'
+        name: 'Reviews',
+        sref: 'details'
       },
       {
         name: 'Compare'
@@ -21,4 +23,4 @@ function NavMenuComponent(app) {
   });
 }
 
-export default {NavMenuComponent}
+export default {NavMenuComponent};
