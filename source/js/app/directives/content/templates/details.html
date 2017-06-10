@@ -1,10 +1,32 @@
-<div class="content" ng-if="details">
+<div class="content details" ng-if="details">
   <div class="row">
-    <div class="jumbotron">
-      <img ng-if="details.backdrop_path" ng-src="{{backdropImg}}" />
-      <h1>{{title}}</h1>
-    </div>
 
+    <style ng-if="details.backdrop_path">
+      .details__hero {
+        background: url({{backdropImg}});
+        background-size: cover;
+      }
+    </style>
+    <div class="details__hero">
+      <!-- <img ng-if="details.backdrop_path" class="details__backdrop-img" ng-src="{{backdropImg}}" />
+      <img ng-if="details.poster_path" class="details__poster-img" ng-src="{{posterPath}}" />
+      <h1>{{title}}</h1> -->
+
+      <div class="details-hero__overlay">
+        <div class="details__poster-img">
+          <img ng-if="details.poster_path" ng-src="{{posterPath}}" />
+          <img ng-if="details.profile_path" ng-src="{{profileImg}}" />
+        </div>
+        <div class="details__title">
+          <h1>{{title}}</h1>
+        </div>
+      </div>
+
+    </div>
+    <div class="details__heading">
+
+
+    </div>
   </div>
 
 

@@ -364,7 +364,7 @@ function ContentComponents(app) {
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content\" ng-if=\"details\">\n  <div class=\"row\">\n    <div class=\"jumbotron\">\n      <img ng-if=\"details.backdrop_path\" ng-src=\"{{backdropImg}}\" />\n      <h1>{{title}}</h1>\n    </div>\n\n  </div>\n\n\n  <p>\n    {{details.type}}\n  </p>\n  <p>\n    {{summary}}\n  </p>\n</div>\n";
+module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div class=\"row\">\n\n    <style ng-if=\"details.backdrop_path\">\n      .details__hero {\n        background: url({{backdropImg}});\n        background-size: cover;\n      }\n    </style>\n    <div class=\"details__hero\">\n      <!-- <img ng-if=\"details.backdrop_path\" class=\"details__backdrop-img\" ng-src=\"{{backdropImg}}\" />\n      <img ng-if=\"details.poster_path\" class=\"details__poster-img\" ng-src=\"{{posterPath}}\" />\n      <h1>{{title}}</h1> -->\n\n      <div class=\"details-hero__overlay\">\n        <div class=\"details__poster-img\">\n          <img ng-if=\"details.poster_path\" ng-src=\"{{posterPath}}\" />\n          <img ng-if=\"details.profile_path\" ng-src=\"{{profileImg}}\" />\n        </div>\n        <div class=\"details__title\">\n          <h1>{{title}}</h1>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"details__heading\">\n\n\n    </div>\n  </div>\n\n\n  <p>\n    {{details.type}}\n  </p>\n  <p>\n    {{summary}}\n  </p>\n</div>\n";
 
 /***/ }),
 /* 20 */
@@ -379,16 +379,14 @@ module.exports = "<h1>{{title}}</h1>\n\n<p>\n  This is the homepage!!\n</p>\n";
 "use strict";
 function DetailsComponent(app) {
   app.movieApp.controller('DetailsController', ['$scope', '$rootScope', function($scope, $rootScope){
-
-
     $scope.$on('detailsSet', function (event, details) {
-
-      console.log($scope.tmdbConfig.data.images.still_sizes);
       $scope.details = details;
       $scope.type = details.type; //movie, tv or person
       $scope.title = details.title || details.original_name || details.name; //different prop depending on type: person, movie or tv.
-      $scope.summary = details.overview;
+      $scope.summary = details.overview || details.biography;
       $scope.backdropImg = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[3] + details.backdrop_path;
+      $scope.posterPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[2] + details.poster_path;
+      $scope.profileImg = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[2] + details.profile_path;
     });
 
   }])
