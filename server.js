@@ -9,5 +9,5 @@ app.get('/', function(req, res) {
 app.use(express.static('assets')); //All assets files in here.
 
 app.listen(process.env.PORT || 1234, function () {
-  console.log('App is on port 1234. (localhost:1234)')
+  console.log('App is on port 1234. (http://localhost:1234)')
 })

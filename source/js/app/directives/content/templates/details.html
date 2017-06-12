@@ -17,9 +17,24 @@
           <img ng-if="details.poster_path" ng-src="{{posterPath}}" />
           <img ng-if="details.profile_path" ng-src="{{profileImg}}" />
         </div>
-        <div class="details__title">
-          <h1>{{title}}</h1>
+
+        <div class="pull-right">
+          <div class="details__more-info">
+            <h1>{{title}}</h1>
+          </div>
+          <div class="details__more-info">
+            <div ng-if="details.type == 'movie'">
+              <h3 class="info__tagline">"{{details.tagline}}"</h3>
+              <dl class="details__summary-list dl-horizontal">
+                <div ng-repeat="item in summaryListItems" class="summary-list__row" ng-class="item.name">
+                  <dt class="summary-list__term">{{item.label}}</dt>
+                  <dd class="summary-list__desc">{{item.value}}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
         </div>
+
       </div>
 
     </div>
