@@ -8,6 +8,10 @@
 
   &__poster-img {
     float: left;
+    @include breakpoint-max($breakpoint-xs-max) {
+      text-align: center;
+    }
+
     img {
       max-height: 400px;
     }

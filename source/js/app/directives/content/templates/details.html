@@ -1,30 +1,26 @@
 <div class="content details" ng-if="details">
-  <div class="row">
-
+  <div>
     <style ng-if="details.backdrop_path">
       .details__hero {
         background: url({{backdropImg}});
         background-size: cover;
       }
     </style>
-    <div class="details__hero">
-      <!-- <img ng-if="details.backdrop_path" class="details__backdrop-img" ng-src="{{backdropImg}}" />
-      <img ng-if="details.poster_path" class="details__poster-img" ng-src="{{posterPath}}" />
-      <h1>{{title}}</h1> -->
+    <div class="details__hero row">
 
       <div class="details-hero__overlay">
-        <div class="details__poster-img">
+        <div class="details__poster-img col-xs-12 col-sm-6">
           <img ng-if="details.poster_path" ng-src="{{posterPath}}" />
           <img ng-if="details.profile_path" ng-src="{{profileImg}}" />
         </div>
 
-        <div class="pull-right">
+        <div class="col-xs-12 col-sm-6 pull-right hidden-xs">
           <div class="details__more-info">
             <h1>{{title}}</h1>
           </div>
           <div class="details__more-info">
             <div ng-if="details.type == 'movie'">
-              <h3 class="info__tagline">"{{details.tagline}}"</h3>
+              <h3 class="info__tagline" ng-if="details.tagline">"{{details.tagline}}"</h3>
               <dl class="details__summary-list dl-horizontal">
                 <div ng-repeat="item in summaryListItems" class="summary-list__row" ng-class="item.name">
                   <dt class="summary-list__term">{{item.label}}</dt>
@@ -34,21 +30,29 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-    <div class="details__heading">
-
-
+    <div class="details__heading visible-xs row">
+      <div class="col-xs-12">
+        <h1>{{title}}</h1>
+        <h3 class="info__tagline" ng-if="details.tagline">"{{details.tagline}}"</h3>
+        <dl class="details__summary-list dl-horizontal">
+          <div ng-repeat="item in summaryListItems" class="summary-list__row" ng-class="item.name">
+            <dt class="summary-list__term">{{item.label}}</dt>
+            <dd class="summary-list__desc">{{item.value}}</dd>
+          </div>
+        </dl>
+      </div>
     </div>
   </div>
 
+  <div class="row" ng-if="summary">
+    <div class="col-xs-12">
+      <h4>Summary</h4>
+      <p>
+        {{summary}}
+      </p>
+    </div>
+  </div>
 
-  <p>
-    {{details.type}}
-  </p>
-  <p>
-    {{summary}}
-  </p>
 </div>

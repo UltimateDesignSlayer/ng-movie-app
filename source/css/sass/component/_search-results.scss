@@ -4,12 +4,52 @@
   margin: 0;
   max-height: 300px;
   overflow-y: scroll;
+  border: 2px solid $color-blue5;
+  border-top: none;
 }
 
 .search-results-list-item {
+  position: relative;
   background: $color-pale-blue;
   border-bottom: 1px solid $color-blue5;
+  display: flex;
+  cursor: pointer;
   &:nth-child(odd) {
     background: $color-white;
   }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.results-item {
+  &__image-container {
+    flex: 2;
+  }
+  &__details {
+    flex: 10;
+    display: flex;
+  }
+  &__title {
+    flex: 5;
+    display: flex;
+    align-items: center;
+  }
+  &__type {
+    flex: 5;
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+  }
+  &__placeholder {
+    width: 92px;
+    height: 138px;
+    background: $color-grey;
+  }
+}
+
+
+.result-item-details {
+  height: 138px;
+  line-height: 138px;
 }

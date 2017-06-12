@@ -40,13 +40,6 @@ function SearchComponent(app){
         $scope.$apply(); // refresh
       });
 
-      // //Get full data of movie/tv show/person clicked in results
-      // $http.get('https://api.themoviedb.org/3/' + type + '/' + id + '?api_key=' + app.apiKey)
-      //   .then(function(response) {
-      //     console.log(response);
-      //     $scope.searchActive(false);
-      //     // return response.data;
-      //   });
     }
   }])
   .directive('searchDirective', function(){

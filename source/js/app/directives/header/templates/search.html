@@ -14,13 +14,28 @@
       </div>
     </form>
     <div class="row" ng-if="isSearchActive">
-      <ul class="search-results-list">
+      <ul class="search-results-list" ng-if="searchResults">
         <li class="search-results-list-item" ng-repeat="result in searchResults" ui-sref="details" ng-click="selectResult(result.id, result.media_type)">
-          <img
-            ng-src="{{searchResultImgPath + result.poster_path || searchResultImgPath + result.profile_path}}"
-            ng-if="result.poster_path || result.profile_path"
-            alt="{{result.title || result.name}}" />
-          - {{result.title || result.name}} - {{result.media_type}}
+            <div class="results-item__image-container">
+              <img
+                ng-src="{{searchResultImgPath + result.poster_path}}"
+                ng-if="result.poster_path"
+                alt="{{result.title || result.name}}" />
+              <img
+                ng-src="{{searchResultImgPath + result.profile_path}}"
+                ng-if="result.profile_path"
+                alt="{{result.title || result.name}}" />
+              <div class="results-item__placeholder" ng-if="!result.profile_path && !result.poster_path">                
+              </div>
+            </div>
+            <div class="results-item__details">
+              <div class="results-item__title">
+                {{result.title || result.name}}
+              </div>
+              <div class="results-item__type">
+                {{result.media_type}}
+              </div>
+            </div>
         </li>
       </ul>
     </div>
