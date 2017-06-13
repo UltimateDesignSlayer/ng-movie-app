@@ -1,5 +1,5 @@
 # ng-movie-app
-Movie info app using TMDb
+Movie info app using TMDb. http://morahman.co.uk/ei/
 
 ## Getting started
 - run `npm install`
