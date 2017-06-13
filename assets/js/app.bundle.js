@@ -117,6 +117,12 @@ var appConfig = {
           $scope.posterImg500 = response.data.images.base_url + response.data.images.poster_sizes[4];
           $scope.posterImg780 = response.data.images.base_url + response.data.images.poster_sizes[5];
           $scope.posterImgOriginal = response.data.images.base_url + response.data.images.poster_sizes[6];
+
+
+          $scope.backdropImgSmall = response.data.images.base_url + response.data.images.backdrop_sizes[0];
+          $scope.backdropImgMedium = response.data.images.base_url + response.data.images.backdrop_sizes[1];
+          $scope.backdropImgLarge = response.data.images.base_url + response.data.images.backdrop_sizes[2];
+          $scope.backdropImgOriginal = response.data.images.base_url + response.data.images.backdrop_sizes[3];
           console.log("TMDB API config received. ", response)
         });
 
@@ -207,7 +213,7 @@ module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div>\n  
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{title}}</h1>\n\n<p>\n  This is the homepage!!\n</p>\n";
+module.exports = "<h2>Most Popular Movies</h2>\n<div class=\"home-movielist\">\n  <div class=\"home-movielist__item\" ng-repeat=\"item in homePopularMoviesData\" ng-if=\"item.backdrop_path\" ui-sref=\"details\" ng-click=\"selectItem(item.id,'movie')\">\n    <div class=\"home-movielist__img-wrapper\">\n      <img ng-src=\"{{backdropImgLarge + item.backdrop_path}}\" ng-if=\"item.backdrop_path\" class=\"home-movielist__img\" />\n      <div class=\"home-movielist__placeholder\" ng-if=\"!item.backdrop_path\">\n      </div>\n    </div>\n    <div class=\"home-movielist__title\">\n      {{item.title}} ({{item.release_date | date:'yyyy'}})\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 8 */
@@ -361,9 +367,27 @@ function DetailsComponent(app) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_movieService__ = __webpack_require__(15);
+
+
 function HomeComponent(app){
-  app.movieApp.controller('HomeController', ['$scope', function($scope){
-    $scope.title = "HOMEPAGE";
+  app.movieApp.controller('HomeController', ['$scope', '$rootScope', function($scope, $rootScope){
+
+    __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getPopularData(app, 'movie', (results) => {
+      $scope.homePopularMoviesData = results.results;
+      $scope.$apply(); // refresh
+    });
+
+    $scope.selectItem = function(id, type) {
+      __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getItemData(app, id, type, (item) => {
+        $rootScope.currentItemDetails = item;
+        $rootScope.currentItemDetails.type = type;
+        console.log($rootScope.currentItemDetails);
+        $rootScope.$broadcast('detailsSet', $rootScope.currentItemDetails);
+        $scope.$apply(); // refresh
+      });
+    }
+
   }])
   .directive('homeDirective', function(){
     return {
@@ -571,7 +595,23 @@ const getSimilarData = (app, id, type, callback) => {
   });
 }
 
-/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData});
+const getPopularData = (app, type, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/' + type + '/popular?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData, getPopularData});
 
 
 /***/ }),

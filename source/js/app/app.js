@@ -20,6 +20,12 @@ var appConfig = {
           $scope.posterImg500 = response.data.images.base_url + response.data.images.poster_sizes[4];
           $scope.posterImg780 = response.data.images.base_url + response.data.images.poster_sizes[5];
           $scope.posterImgOriginal = response.data.images.base_url + response.data.images.poster_sizes[6];
+
+
+          $scope.backdropImgSmall = response.data.images.base_url + response.data.images.backdrop_sizes[0];
+          $scope.backdropImgMedium = response.data.images.base_url + response.data.images.backdrop_sizes[1];
+          $scope.backdropImgLarge = response.data.images.base_url + response.data.images.backdrop_sizes[2];
+          $scope.backdropImgOriginal = response.data.images.base_url + response.data.images.backdrop_sizes[3];
           console.log("TMDB API config received. ", response)
         });
 

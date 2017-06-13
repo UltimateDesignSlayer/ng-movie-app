@@ -214,6 +214,33 @@
 body.search-active main.container {
   margin-top: 40px; }
 
+.home-movielist {
+  display: flex;
+  flex-wrap: wrap; }
+  .home-movielist__img-wrapper {
+    display: flex;
+    flex-direction: column; }
+  .home-movielist__item {
+    width: 33.33%;
+    padding: 0 15px 20px;
+    box-sizing: border-box;
+    cursor: pointer; }
+    @media only screen and (max-width: 991px) {
+      .home-movielist__item {
+        width: 50%; } }
+    @media only screen and (max-width: 767px) {
+      .home-movielist__item {
+        width: 100%; } }
+  .home-movielist__placeholder {
+    flex: 1;
+    background: #ccc; }
+  .home-movielist__img {
+    width: 100%; }
+  .home-movielist__title {
+    text-align: center;
+    font-size: 16px;
+    padding-top: 10px; }
+
 .footer {
   text-align: right;
   font-style: italic;

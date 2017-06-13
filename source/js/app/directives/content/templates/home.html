@@ -1,5 +1,13 @@
-<h1>{{title}}</h1>
-
-<p>
-  This is the homepage!!
-</p>
+<h2>Most Popular Movies</h2>
+<div class="home-movielist">
+  <div class="home-movielist__item" ng-repeat="item in homePopularMoviesData" ng-if="item.backdrop_path" ui-sref="details" ng-click="selectItem(item.id,'movie')">
+    <div class="home-movielist__img-wrapper">
+      <img ng-src="{{backdropImgLarge + item.backdrop_path}}" ng-if="item.backdrop_path" class="home-movielist__img" />
+      <div class="home-movielist__placeholder" ng-if="!item.backdrop_path">
+      </div>
+    </div>
+    <div class="home-movielist__title">
+      {{item.title}} ({{item.release_date | date:'yyyy'}})
+    </div>
+  </div>
+</div>

@@ -94,4 +94,20 @@ const getSimilarData = (app, id, type, callback) => {
   });
 }
 
-export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData};
+const getPopularData = (app, type, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/' + type + '/popular?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData, getPopularData};
