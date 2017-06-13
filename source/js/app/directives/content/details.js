@@ -12,6 +12,13 @@ function DetailsComponent(app) {
 
       //Summary list items
       if(details.type === 'movie') {
+        MovieServices.getItemCreditsData(app, details.id, details.type, (results) => {
+          $scope.creditImageSize = $scope.posterImg92;
+          $scope.creditCastData = results.cast;
+          $scope.creditCrewData = results.crew;
+          $scope.$apply(); // refresh
+        });
+
         summaryListItemsArray = [
           {
             name: 'vote_average',

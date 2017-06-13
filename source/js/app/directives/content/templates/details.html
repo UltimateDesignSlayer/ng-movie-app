@@ -65,6 +65,55 @@
     </div>
   </div>
 
+  <div ng-if="details.type == 'movie'">
+    <div class="person-movies">
+      <h3>Cast</h3>
+      <div ng-if="!creditCastData">
+        <p>No cast information.</p>
+      </div>
+      <div class="person-movies__list" ng-if="creditCastData">
+        <div class="person-movies__item" ng-repeat="cast in creditCastData">
+          <div class="person-movies__img-wrapper">
+            <img ng-src="{{creditImageSize + cast.profile_path}}" ng-if="cast.profile_path" />
+            <div class="person-movies__placeholder" ng-if="!cast.profile_path">
+            </div>
+          </div>
+          <div class="person-movies__details">
+            <div class="person-movies__title">
+              {{cast.name}}
+            </div>
+            <div class="person-movies__character">
+              {{cast.character}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="person-movies">
+      <h3>Crew</h3>
+      <div ng-if="!creditCrewData">
+        <p>No crew information.</p>
+      </div>
+      <div class="person-movies__list" ng-if="creditCrewData">
+        <div class="person-movies__item" ng-repeat="crew in creditCrewData">
+          <div class="person-movies__img-wrapper">
+            <img ng-src="{{creditImageSize + crew.profile_path}}" ng-if="crew.profile_path" />
+            <div class="person-movies__placeholder" ng-if="!crew.profile_path"></div>
+          </div>
+          <div class="person-movies__details">
+            <div class="person-movies__title">
+              {{crew.name}}
+            </div>
+            <div class="person-movies__character">
+              {{crew.job}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div ng-if="details.type == 'person'">
     <div class="person-movies">
       <h3>Movies</h3>
