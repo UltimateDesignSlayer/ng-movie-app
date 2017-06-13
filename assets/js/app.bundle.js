@@ -105,6 +105,18 @@ var appConfig = {
       $http.get('https://api.themoviedb.org/3/configuration?api_key=' + appConfig.apiKey)
         .then(function(response) {
           $scope.tmdbConfig = response;
+          $scope.stillImgSmall = response.data.images.base_url + response.data.images.still_sizes[0];
+          $scope.stillImgMedium = response.data.images.base_url + response.data.images.still_sizes[1];
+          $scope.stillImgLarge = response.data.images.base_url + response.data.images.still_sizes[2];
+          $scope.stillImgOriginal = response.data.images.base_url + response.data.images.still_sizes[3];
+
+          $scope.posterImg92 = response.data.images.base_url + response.data.images.poster_sizes[0];
+          $scope.posterImg154 = response.data.images.base_url + response.data.images.poster_sizes[1];
+          $scope.posterImg185 = response.data.images.base_url + response.data.images.poster_sizes[2];
+          $scope.posterImg342 = response.data.images.base_url + response.data.images.poster_sizes[3];
+          $scope.posterImg500 = response.data.images.base_url + response.data.images.poster_sizes[4];
+          $scope.posterImg780 = response.data.images.base_url + response.data.images.poster_sizes[5];
+          $scope.posterImgOriginal = response.data.images.base_url + response.data.images.poster_sizes[6];
           console.log("TMDB API config received. ", response)
         });
 
@@ -189,7 +201,7 @@ function HeaderComponent(app){
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div>\n    <style ng-if=\"details.backdrop_path\">\n      .details__hero {\n        background: url({{backdropImg}});\n        background-size: cover;\n      }\n    </style>\n    <div class=\"details__hero row\">\n\n      <div class=\"details-hero__overlay\">\n        <div class=\"details__poster-img col-xs-12 col-sm-6\">\n          <img ng-if=\"details.poster_path\" ng-src=\"{{posterPath}}\" />\n          <img ng-if=\"details.profile_path\" ng-src=\"{{profileImg}}\" />\n        </div>\n\n        <div class=\"col-xs-12 col-sm-6 pull-right hidden-xs\">\n          <div class=\"details__more-info\">\n            <h1>{{title}}</h1>\n          </div>\n          <div class=\"details__more-info\">\n            <div ng-if=\"details.type == 'movie'\">\n              <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"details__heading visible-xs row\">\n      <div class=\"col-xs-12\">\n        <h1>{{title}}</h1>\n        <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n        <dl class=\"details__summary-list dl-horizontal\">\n          <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n            <dt class=\"summary-list__term\">{{item.label}}</dt>\n            <dd class=\"summary-list__desc\">{{item.value}}</dd>\n          </div>\n        </dl>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\" ng-if=\"summary\">\n    <div class=\"col-xs-12\">\n      <h4>Summary</h4>\n      <p>\n        {{summary}}\n      </p>\n    </div>\n  </div>\n\n</div>\n";
+module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div>\n    <style ng-if=\"details.backdrop_path\">\n      .details__hero {\n        background: url({{backdropImg}});\n        background-size: cover;\n      }\n    </style>\n    <div class=\"details__hero row\">\n\n      <div class=\"details-hero__overlay\">\n        <div class=\"details__poster-img col-xs-12 col-sm-6\">\n          <img ng-if=\"details.poster_path\" ng-src=\"{{posterPath}}\" />\n          <img ng-if=\"details.profile_path\" ng-src=\"{{profileImg}}\" />\n        </div>\n\n        <div class=\"col-xs-12 col-sm-6 pull-right hidden-xs\">\n          <div class=\"details__more-info\">\n            <h1>{{title}}</h1>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type == 'movie'\">\n            <div>\n              <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type == 'person'\">\n            <div>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"details__heading visible-xs row\">\n      <div class=\"col-xs-12\">\n        <h1>{{title}}</h1>\n        <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n        <dl class=\"details__summary-list dl-horizontal\">\n          <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n            <dt class=\"summary-list__term\">{{item.label}}</dt>\n            <dd class=\"summary-list__desc\">{{item.value}}</dd>\n          </div>\n        </dl>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\" ng-if=\"summary\">\n    <div class=\"col-xs-12\">\n      <h4>Summary</h4>\n      <p>\n        {{summary}}\n      </p>\n    </div>\n  </div>\n\n  <div ng-if=\"details.type == 'person'\">\n    <div class=\"person-movies\" ng-if=\"personMovies\">\n      <h3>Movies</h3>\n      <div class=\"person-movies__list\">\n        <div class=\"person-movies__item\" ng-repeat=\"movie in personMovies\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{personMoviePoster + movie.poster_path}}\" ng-if=\"movie.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!movie.poster_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{movie.original_title}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{movie.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n";
 
 /***/ }),
 /* 7 */
@@ -220,6 +232,9 @@ module.exports = "<div class=\"ma-search\">\n  <div class=\"container\">\n    <d
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_movieService__ = __webpack_require__(15);
+
+
 function DetailsComponent(app) {
   app.movieApp.controller('DetailsController', ['$scope', '$rootScope', '$filter', function($scope, $rootScope, $filter){
     $scope.$on('detailsSet', function (event, details) {
@@ -228,29 +243,58 @@ function DetailsComponent(app) {
       $scope.title = details.title || details.original_name || details.name; //different prop depending on type: person, movie or tv.
       $scope.summary = details.overview || details.biography;
 
+      let summaryListItemsArray = [];
+
       //Summary list items
-      let summaryListItemsArray = [
-        {
-          name: 'vote_average',
-          label: 'TMDB rating'
-        },
-        {
-          name: 'original_language',
-          label: 'Original language'
-        },
-        {
-          name: 'budget',
-          label: 'Budget (US$)'
-        },
-        {
-          name: 'revenue',
-          label: 'Revenue (US$)'
-        },
-        {
-          name: 'runtime',
-          label: 'Runtime'
-        }
-      ];
+      if(details.type === 'movie') {
+        summaryListItemsArray = [
+          {
+            name: 'vote_average',
+            label: 'TMDB rating'
+          },
+          {
+            name: 'original_language',
+            label: 'Original language'
+          },
+          {
+            name: 'budget',
+            label: 'Budget (US$)'
+          },
+          {
+            name: 'revenue',
+            label: 'Revenue (US$)'
+          },
+          {
+            name: 'runtime',
+            label: 'Runtime'
+          }
+        ];
+      }
+
+      if(details.type === 'person') {
+        __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getPersonMovieData(app, details.id, (results) => {
+          console.log(results.cast);
+
+          $scope.personMoviePoster = $scope.posterImg92;
+          $scope.personMovies = results.cast;
+          $scope.$apply(); // refresh
+        });
+
+        summaryListItemsArray = [
+          {
+            name: 'birthday',
+            label: 'DOB'
+          },
+          {
+            name: 'place_of_birth',
+            label: 'Place of birth'
+          },
+          {
+            name: 'deathday',
+            label: 'Date of death'
+          }
+        ];
+      }
 
       $scope.summaryListItems = [];
       summaryListItemsArray.forEach((item) => {
@@ -265,9 +309,9 @@ function DetailsComponent(app) {
       });
 
       //Images
-      $scope.backdropImg = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[3] + details.backdrop_path;
-      $scope.posterPath = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[2] + details.poster_path;
-      $scope.profileImg = $scope.tmdbConfig.data.images.base_url + $scope.tmdbConfig.data.images.still_sizes[2] + details.profile_path;
+      $scope.backdropImg = $scope.stillImgOriginal + details.backdrop_path;
+      $scope.posterPath = $scope.stillImgLarge + details.poster_path;
+      $scope.profileImg = $scope.stillImgLarge + details.profile_path;
     });
 
   }])
@@ -433,7 +477,39 @@ const getItemData = (app, id, type, callback) => {
   });
 }
 
-/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData});
+const getItemCreditsData = (app, id, type, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/' + type + '/' + id + '/credits?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+const getPersonMovieData = (app, id, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/person/' + id + '/movie_credits?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData, getItemCreditsData, getPersonMovieData});
 
 
 /***/ }),

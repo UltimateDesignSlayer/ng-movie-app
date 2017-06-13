@@ -1,0 +1,48 @@
+.person-movies {
+  width: 33%;
+
+  &__list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 300px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    &:nth-child(odd) {
+      background: $color-pale-blue;
+    }
+  }
+
+  &__img-wrapper {
+    flex: 4;
+  }
+
+  &__placeholder {
+    width: 92px;
+    height: 138px;
+    background: $color-grey;
+  }
+
+  &__details {
+    display: flex;
+    flex: 8;
+    flex-direction: column;
+  }
+
+  &__title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 18px;
+  }
+
+  &__character {
+    flex: 1;
+    color: $color-darkgrey;
+    font-style: italic;
+  }
+}

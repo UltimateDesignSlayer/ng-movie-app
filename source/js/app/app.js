@@ -8,6 +8,18 @@ var appConfig = {
       $http.get('https://api.themoviedb.org/3/configuration?api_key=' + appConfig.apiKey)
         .then(function(response) {
           $scope.tmdbConfig = response;
+          $scope.stillImgSmall = response.data.images.base_url + response.data.images.still_sizes[0];
+          $scope.stillImgMedium = response.data.images.base_url + response.data.images.still_sizes[1];
+          $scope.stillImgLarge = response.data.images.base_url + response.data.images.still_sizes[2];
+          $scope.stillImgOriginal = response.data.images.base_url + response.data.images.still_sizes[3];
+
+          $scope.posterImg92 = response.data.images.base_url + response.data.images.poster_sizes[0];
+          $scope.posterImg154 = response.data.images.base_url + response.data.images.poster_sizes[1];
+          $scope.posterImg185 = response.data.images.base_url + response.data.images.poster_sizes[2];
+          $scope.posterImg342 = response.data.images.base_url + response.data.images.poster_sizes[3];
+          $scope.posterImg500 = response.data.images.base_url + response.data.images.poster_sizes[4];
+          $scope.posterImg780 = response.data.images.base_url + response.data.images.poster_sizes[5];
+          $scope.posterImgOriginal = response.data.images.base_url + response.data.images.poster_sizes[6];
           console.log("TMDB API config received. ", response)
         });
 
