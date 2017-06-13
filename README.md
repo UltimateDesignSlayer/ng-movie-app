@@ -13,9 +13,9 @@ Webpack 2 for bundling and sass compilation.
 Express js for the server.
 
 #### Libraries/Frameworks
-Bootstrap - to build out a decent looking UI quickly
-Jquery - for bootstrap.
-Angular - for handling data and state management.
+* Bootstrap - to build out a decent looking UI quickly
+* Jquery - for bootstrap.
+* Angular - for handling data and state management.
 
 ## To Do
 
