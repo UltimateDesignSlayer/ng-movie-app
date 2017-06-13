@@ -20,6 +20,8 @@ Angular - for handling data and state management.
 ## To Do
 
 ### Improvements
+* Improve look of search results
+* Make crew, cast, similar etc. items height: auto;. Needs to grow if there are titles which wrap onto many lines.
 * Improve scroll on divs for crew, cast, similar etc.
 * Mobile menu should close on selection.
 
