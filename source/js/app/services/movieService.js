@@ -62,4 +62,36 @@ const getPersonMovieData = (app, id, callback) => {
   });
 }
 
-export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData};
+const getPersonTvData = (app, id, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/person/' + id + '/tv_credits?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+const getPersonSimilarData = (app, id, callback) => {
+  fetch(
+    'https://api.themoviedb.org/3/person/' + id + '/tv_credits?api_key=' + app.apiKey,
+    {method: 'GET'}
+  )
+  .then((response) => {
+  	response.json().then((data) => {
+      callback(data);
+      return data;
+    })
+    .catch((err) => {
+    	return err;
+    });
+  });
+}
+
+export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData};

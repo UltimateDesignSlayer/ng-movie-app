@@ -1,5 +1,7 @@
 .person-movies {
   width: 33%;
+  float: left;
+  overflow: hidden;
 
   &__list {
     overflow-y: scroll;

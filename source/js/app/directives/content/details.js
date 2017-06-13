@@ -38,10 +38,16 @@ function DetailsComponent(app) {
 
       if(details.type === 'person') {
         MovieServices.getPersonMovieData(app, details.id, (results) => {
+          $scope.personMoviePosterSize = $scope.posterImg92;
+          $scope.personMovies = results.cast;
+          $scope.$apply(); // refresh
+        });
+
+        MovieServices.getPersonTvData(app, details.id, (results) => {
           console.log(results.cast);
 
-          $scope.personMoviePoster = $scope.posterImg92;
-          $scope.personMovies = results.cast;
+          $scope.personTVPosterSize = $scope.posterImg92;
+          $scope.personTV = results.cast;
           $scope.$apply(); // refresh
         });
 

@@ -58,7 +58,7 @@
 
   <div class="row" ng-if="summary">
     <div class="col-xs-12">
-      <h4>Summary</h4>
+      <h3>Summary</h3>
       <p>
         {{summary}}
       </p>
@@ -66,12 +66,15 @@
   </div>
 
   <div ng-if="details.type == 'person'">
-    <div class="person-movies" ng-if="personMovies">
+    <div class="person-movies">
       <h3>Movies</h3>
-      <div class="person-movies__list">
+      <div ng-if="!personMovies">
+        <p>No movie information.</p>
+      </div>
+      <div class="person-movies__list" ng-if="personMovies">
         <div class="person-movies__item" ng-repeat="movie in personMovies">
           <div class="person-movies__img-wrapper">
-            <img ng-src="{{personMoviePoster + movie.poster_path}}" ng-if="movie.poster_path" />
+            <img ng-src="{{personMoviePosterSize + movie.poster_path}}" ng-if="movie.poster_path" />
             <div class="person-movies__placeholder" ng-if="!movie.poster_path">
             </div>
           </div>
@@ -81,6 +84,30 @@
             </div>
             <div class="person-movies__character">
               {{movie.character}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="person-movies">
+      <h3>TV</h3>
+      <div ng-if="!personTV">
+        <p>No tv show information.</p>
+      </div>
+      <div class="person-movies__list" ng-if="personTV">
+        <div class="person-movies__item" ng-repeat="tv in personTV">
+          <div class="person-movies__img-wrapper">
+            <img ng-src="{{personTVPosterSize + tv.poster_path}}" ng-if="tv.poster_path" />
+            <div class="person-movies__placeholder" ng-if="!tv.poster_path">
+            </div>
+          </div>
+          <div class="person-movies__details">
+            <div class="person-movies__title">
+              {{tv.name}}
+            </div>
+            <div class="person-movies__character">
+              {{tv.character}}
             </div>
           </div>
         </div>
