@@ -18,6 +18,11 @@ Jquery - for bootstrap.
 Angular - for handling data and state management.
 
 ## To Do
+
+### Improvements
+* Improve scroll on divs for crew, cast, similar etc.
+* Mobile menu should close on selection.
+
 ### Compare movies feature?
 Have a page for comparing movies ratings, cast etc.
 
