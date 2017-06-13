@@ -411,13 +411,6 @@ function NavMenuComponent(app) {
       {
         name: 'Home',
         sref: 'home'
-      },
-      {
-        name: 'Reviews',
-        sref: 'details'
-      },
-      {
-        name: 'Compare'
       }
     ];
 
