@@ -17,6 +17,7 @@
   &__item {
     display: flex;
     flex-direction: row;
+    cursor: pointer;
     margin-bottom: 10px;
     &:nth-child(odd) {
       background: $color-pale-blue;

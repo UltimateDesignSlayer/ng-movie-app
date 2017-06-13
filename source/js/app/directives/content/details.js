@@ -103,6 +103,18 @@ function DetailsComponent(app) {
         }
       });
 
+      $scope.selectItem = function(id, type) {
+        MovieServices.getItemData(app, id, type, (item) => {
+          $rootScope.currentItemDetails = item;
+          $rootScope.currentItemDetails.type = type;
+          console.log($rootScope.currentItemDetails);
+          $rootScope.$broadcast('detailsSet', $rootScope.currentItemDetails);
+          $scope.$apply(); // refresh
+          $('body').scrollTop(0);
+          $('div').scrollTop(0); // reset scroll positions on all divs
+        });
+      }
+
       //Images
       $scope.backdropImg = $scope.stillImgOriginal + details.backdrop_path;
       $scope.posterPath = $scope.stillImgLarge + details.poster_path;

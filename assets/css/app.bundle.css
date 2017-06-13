@@ -161,6 +161,7 @@
   .person-movies__item {
     display: flex;
     flex-direction: row;
+    cursor: pointer;
     margin-bottom: 10px; }
     .person-movies__item:nth-child(odd) {
       background: #c4d6ff; }

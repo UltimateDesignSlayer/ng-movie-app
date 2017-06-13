@@ -72,7 +72,7 @@
         <p>No cast information.</p>
       </div>
       <div class="person-movies__list" ng-if="creditCastData">
-        <div class="person-movies__item" ng-repeat="cast in creditCastData">
+        <div class="person-movies__item" ng-repeat="cast in creditCastData" ui-sref="details" ng-click="selectItem(cast.id, 'person')">
           <div class="person-movies__img-wrapper">
             <img ng-src="{{posterImg92 + cast.profile_path}}" ng-if="cast.profile_path" />
             <div class="person-movies__placeholder" ng-if="!cast.profile_path">
@@ -96,7 +96,7 @@
         <p>No crew information.</p>
       </div>
       <div class="person-movies__list" ng-if="creditCrewData">
-        <div class="person-movies__item" ng-repeat="crew in creditCrewData">
+        <div class="person-movies__item" ng-repeat="crew in creditCrewData" ui-sref="details" ng-click="selectItem(crew.id, 'person')">
           <div class="person-movies__img-wrapper">
             <img ng-src="{{posterImg92 + crew.profile_path}}" ng-if="crew.profile_path" />
             <div class="person-movies__placeholder" ng-if="!crew.profile_path"></div>
@@ -119,7 +119,7 @@
         <p>No similar information.</p>
       </div>
       <div class="person-movies__list" ng-if="similarData">
-        <div class="person-movies__item" ng-repeat="item in similarData">
+        <div class="person-movies__item" ng-repeat="item in similarData" ui-sref="details" ng-click="selectItem(item.id,details.type)">
           <div class="person-movies__img-wrapper">
             <img ng-src="{{posterImg92 + item.poster_path}}" ng-if="item.poster_path" />
             <div class="person-movies__placeholder" ng-if="!item.poster_path"></div>
@@ -146,7 +146,7 @@
         <p>No movie information.</p>
       </div>
       <div class="person-movies__list" ng-if="personMovies">
-        <div class="person-movies__item" ng-repeat="movie in personMovies">
+        <div class="person-movies__item" ng-repeat="movie in personMovies" ui-sref="details" ng-click="selectItem(movie.id, 'movie')">
           <div class="person-movies__img-wrapper">
             <img ng-src="{{posterImg92 + movie.poster_path}}" ng-if="movie.poster_path" />
             <div class="person-movies__placeholder" ng-if="!movie.poster_path">
@@ -170,7 +170,7 @@
         <p>No tv show information.</p>
       </div>
       <div class="person-movies__list" ng-if="personTV">
-        <div class="person-movies__item" ng-repeat="tv in personTV">
+        <div class="person-movies__item" ng-repeat="tv in personTV" ui-sref="details" ng-click="selectItem(tv.id, 'tv')">
           <div class="person-movies__img-wrapper">
             <img ng-src="{{posterImg92 + tv.poster_path}}" ng-if="tv.poster_path" />
             <div class="person-movies__placeholder" ng-if="!tv.poster_path">
