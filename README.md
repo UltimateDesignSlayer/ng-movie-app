@@ -1,5 +1,5 @@
 # ng-movie-app
-Movie info app using TMDb
+Movie info app using TMDb. http://morahman.co.uk/ei/
 
 ## Getting started
 - run `npm install`
@@ -13,13 +13,15 @@ Webpack 2 for bundling and sass compilation.
 Express js for the server.
 
 #### Libraries/Frameworks
-Bootstrap - to build out a decent looking UI quickly
-Jquery - for bootstrap.
-Angular - for handling data and state management.
+* Bootstrap - to build out a decent looking UI quickly
+* Jquery - for bootstrap.
+* Angular - for handling data and state management.
 
 ## To Do
 
 ### Improvements
+* Improve look of search results
+* Make crew, cast, similar etc. items height: auto;. Needs to grow if there are titles which wrap onto many lines.
 * Improve scroll on divs for crew, cast, similar etc.
 * Mobile menu should close on selection.
 
