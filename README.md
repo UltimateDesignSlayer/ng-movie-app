@@ -23,3 +23,6 @@ Have a page for comparing movies ratings, cast etc.
 
 ### Review feature
 When user has searched a tv show/movie, 2 calls should go out. One to TMDB for the general data, and another to get my review of that tv show/movie if one exists. This will need to match based on TMDB ID.
+
+### Rename ".person-movies" class
+Needs to be renamed to something that makes sense.
