@@ -11,15 +11,27 @@ function DetailsComponent(app) {
       let summaryListItemsArray = [];
 
       //Summary list items
-      if(details.type === 'movie') {
+      if(details.type != 'person') {
         MovieServices.getItemCreditsData(app, details.id, details.type, (results) => {
-          $scope.creditImageSize = $scope.posterImg92;
           $scope.creditCastData = results.cast;
           $scope.creditCrewData = results.crew;
           $scope.$apply(); // refresh
         });
 
+        MovieServices.getSimilarData(app, details.id, details.type, (results) => {
+          $scope.similarData = results.results;
+          $scope.$apply(); // refresh
+        });
+
         summaryListItemsArray = [
+          {
+            name: 'release_date',
+            label: 'Year'
+          },
+          {
+            name: 'first_air_date',
+            label: 'Year'
+          },
           {
             name: 'vote_average',
             label: 'TMDB rating'
@@ -39,21 +51,22 @@ function DetailsComponent(app) {
           {
             name: 'runtime',
             label: 'Runtime'
+          },
+          {
+            name: 'number_of_seasons',
+            label: 'Number of seasons'
           }
         ];
       }
 
       if(details.type === 'person') {
         MovieServices.getPersonMovieData(app, details.id, (results) => {
-          $scope.personMoviePosterSize = $scope.posterImg92;
           $scope.personMovies = results.cast;
           $scope.$apply(); // refresh
         });
 
         MovieServices.getPersonTvData(app, details.id, (results) => {
           console.log(results.cast);
-
-          $scope.personTVPosterSize = $scope.posterImg92;
           $scope.personTV = results.cast;
           $scope.$apply(); // refresh
         });
@@ -79,6 +92,10 @@ function DetailsComponent(app) {
         let itemValue = details[item.name];
         if(item.name == 'budget' || item.name == 'revenue') {
           itemValue = $filter('currency')(itemValue, '$', 2);
+        }
+
+        if(item.name == 'release_date' || item.name == 'first_air_date') {
+          itemValue = $filter('date')(itemValue, 'yyyy');
         }
 
         if(details[item.name]) {

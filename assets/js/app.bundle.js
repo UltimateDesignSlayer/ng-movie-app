@@ -201,7 +201,7 @@ function HeaderComponent(app){
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div>\n    <style ng-if=\"details.backdrop_path\">\n      .details__hero {\n        background: url({{backdropImg}});\n        background-size: cover;\n      }\n    </style>\n    <div class=\"details__hero row\">\n\n      <div class=\"details-hero__overlay\">\n        <div class=\"details__poster-img col-xs-12 col-sm-6\">\n          <img ng-if=\"details.poster_path\" ng-src=\"{{posterPath}}\" />\n          <img ng-if=\"details.profile_path\" ng-src=\"{{profileImg}}\" />\n        </div>\n\n        <div class=\"col-xs-12 col-sm-6 pull-right hidden-xs\">\n          <div class=\"details__more-info\">\n            <h1>{{title}}</h1>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type == 'movie'\">\n            <div>\n              <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type == 'person'\">\n            <div>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"details__heading visible-xs row\">\n      <div class=\"col-xs-12\">\n        <h1>{{title}}</h1>\n        <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n        <dl class=\"details__summary-list dl-horizontal\">\n          <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n            <dt class=\"summary-list__term\">{{item.label}}</dt>\n            <dd class=\"summary-list__desc\">{{item.value}}</dd>\n          </div>\n        </dl>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\" ng-if=\"summary\">\n    <div class=\"col-xs-12\">\n      <h3>Summary</h3>\n      <p>\n        {{summary}}\n      </p>\n    </div>\n  </div>\n\n  <div ng-if=\"details.type == 'movie'\">\n    <div class=\"person-movies\">\n      <h3>Cast</h3>\n      <div ng-if=\"!creditCastData\">\n        <p>No cast information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"creditCastData\">\n        <div class=\"person-movies__item\" ng-repeat=\"cast in creditCastData\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{creditImageSize + cast.profile_path}}\" ng-if=\"cast.profile_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!cast.profile_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{cast.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{cast.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"person-movies\">\n      <h3>Crew</h3>\n      <div ng-if=\"!creditCrewData\">\n        <p>No crew information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"creditCrewData\">\n        <div class=\"person-movies__item\" ng-repeat=\"crew in creditCrewData\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{creditImageSize + crew.profile_path}}\" ng-if=\"crew.profile_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!crew.profile_path\"></div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{crew.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{crew.job}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div ng-if=\"details.type == 'person'\">\n    <div class=\"person-movies\">\n      <h3>Movies</h3>\n      <div ng-if=\"!personMovies\">\n        <p>No movie information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"personMovies\">\n        <div class=\"person-movies__item\" ng-repeat=\"movie in personMovies\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{personMoviePosterSize + movie.poster_path}}\" ng-if=\"movie.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!movie.poster_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{movie.original_title}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{movie.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"person-movies\">\n      <h3>TV</h3>\n      <div ng-if=\"!personTV\">\n        <p>No tv show information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"personTV\">\n        <div class=\"person-movies__item\" ng-repeat=\"tv in personTV\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{personTVPosterSize + tv.poster_path}}\" ng-if=\"tv.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!tv.poster_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{tv.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{tv.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n";
+module.exports = "<div class=\"content details\" ng-if=\"details\">\n  <div>\n    <style ng-if=\"details.backdrop_path\">\n      .details__hero {\n        background: url({{backdropImg}});\n        background-size: cover;\n      }\n    </style>\n    <div class=\"details__hero row\">\n\n      <div class=\"details-hero__overlay\">\n        <div class=\"details__poster-img col-xs-12 col-sm-6\">\n          <img ng-if=\"details.poster_path\" ng-src=\"{{posterPath}}\" />\n          <img ng-if=\"details.profile_path\" ng-src=\"{{profileImg}}\" />\n        </div>\n\n        <div class=\"col-xs-12 col-sm-6 pull-right hidden-xs\">\n          <div class=\"details__more-info\">\n            <h1>{{title}}</h1>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type != 'person'\">\n            <div>\n              <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n          <div class=\"details__more-info\" ng-if=\"details.type == 'person'\">\n            <div>\n              <dl class=\"details__summary-list dl-horizontal\">\n                <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n                  <dt class=\"summary-list__term\">{{item.label}}</dt>\n                  <dd class=\"summary-list__desc\">{{item.value}}</dd>\n                </div>\n              </dl>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"details__heading visible-xs row\" ng-if=\"details.type != 'person'\">\n      <div class=\"col-xs-12\">\n        <h1>{{title}}</h1>\n        <h3 class=\"info__tagline\" ng-if=\"details.tagline\">\"{{details.tagline}}\"</h3>\n        <dl class=\"details__summary-list dl-horizontal\">\n          <div ng-repeat=\"item in summaryListItems\" class=\"summary-list__row\" ng-class=\"item.name\">\n            <dt class=\"summary-list__term\">{{item.label}}</dt>\n            <dd class=\"summary-list__desc\">{{item.value}}</dd>\n          </div>\n        </dl>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\" ng-if=\"summary\">\n    <div class=\"col-xs-12\">\n      <h3>Summary</h3>\n      <p>\n        {{summary}}\n      </p>\n    </div>\n  </div>\n\n  <div ng-if=\"details.type != 'person'\">\n    <div class=\"person-movies\">\n      <h3>Cast</h3>\n      <div ng-if=\"!creditCastData\">\n        <p>No cast information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"creditCastData\">\n        <div class=\"person-movies__item\" ng-repeat=\"cast in creditCastData\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{posterImg92 + cast.profile_path}}\" ng-if=\"cast.profile_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!cast.profile_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{cast.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{cast.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"person-movies\">\n      <h3>Crew</h3>\n      <div ng-if=\"!creditCrewData\">\n        <p>No crew information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"creditCrewData\">\n        <div class=\"person-movies__item\" ng-repeat=\"crew in creditCrewData\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{posterImg92 + crew.profile_path}}\" ng-if=\"crew.profile_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!crew.profile_path\"></div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{crew.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{crew.job}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"person-movies\">\n      <h3>Similar</h3>\n      <div ng-if=\"!similarData\">\n        <p>No similar information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"similarData\">\n        <div class=\"person-movies__item\" ng-repeat=\"item in similarData\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{posterImg92 + item.poster_path}}\" ng-if=\"item.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!item.poster_path\"></div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{item.name || item.title}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{(item.first_air_date || item.release_date) | date:'yyyy'}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n\n  </div>\n\n  <div ng-if=\"details.type == 'person'\">\n    <div class=\"person-movies\">\n      <h3>Movies</h3>\n      <div ng-if=\"!personMovies\">\n        <p>No movie information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"personMovies\">\n        <div class=\"person-movies__item\" ng-repeat=\"movie in personMovies\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{posterImg92 + movie.poster_path}}\" ng-if=\"movie.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!movie.poster_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{movie.original_title}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{movie.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"person-movies\">\n      <h3>TV</h3>\n      <div ng-if=\"!personTV\">\n        <p>No tv show information.</p>\n      </div>\n      <div class=\"person-movies__list\" ng-if=\"personTV\">\n        <div class=\"person-movies__item\" ng-repeat=\"tv in personTV\">\n          <div class=\"person-movies__img-wrapper\">\n            <img ng-src=\"{{posterImg92 + tv.poster_path}}\" ng-if=\"tv.poster_path\" />\n            <div class=\"person-movies__placeholder\" ng-if=\"!tv.poster_path\">\n            </div>\n          </div>\n          <div class=\"person-movies__details\">\n            <div class=\"person-movies__title\">\n              {{tv.name}}\n            </div>\n            <div class=\"person-movies__character\">\n              {{tv.character}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n";
 
 /***/ }),
 /* 7 */
@@ -246,15 +246,27 @@ function DetailsComponent(app) {
       let summaryListItemsArray = [];
 
       //Summary list items
-      if(details.type === 'movie') {
+      if(details.type != 'person') {
         __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getItemCreditsData(app, details.id, details.type, (results) => {
-          $scope.creditImageSize = $scope.posterImg92;
           $scope.creditCastData = results.cast;
           $scope.creditCrewData = results.crew;
           $scope.$apply(); // refresh
         });
 
+        __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getSimilarData(app, details.id, details.type, (results) => {
+          $scope.similarData = results.results;
+          $scope.$apply(); // refresh
+        });
+
         summaryListItemsArray = [
+          {
+            name: 'release_date',
+            label: 'Year'
+          },
+          {
+            name: 'first_air_date',
+            label: 'Year'
+          },
           {
             name: 'vote_average',
             label: 'TMDB rating'
@@ -274,21 +286,22 @@ function DetailsComponent(app) {
           {
             name: 'runtime',
             label: 'Runtime'
+          },
+          {
+            name: 'number_of_seasons',
+            label: 'Number of seasons'
           }
         ];
       }
 
       if(details.type === 'person') {
         __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getPersonMovieData(app, details.id, (results) => {
-          $scope.personMoviePosterSize = $scope.posterImg92;
           $scope.personMovies = results.cast;
           $scope.$apply(); // refresh
         });
 
         __WEBPACK_IMPORTED_MODULE_0__services_movieService__["a" /* default */].getPersonTvData(app, details.id, (results) => {
           console.log(results.cast);
-
-          $scope.personTVPosterSize = $scope.posterImg92;
           $scope.personTV = results.cast;
           $scope.$apply(); // refresh
         });
@@ -314,6 +327,10 @@ function DetailsComponent(app) {
         let itemValue = details[item.name];
         if(item.name == 'budget' || item.name == 'revenue') {
           itemValue = $filter('currency')(itemValue, '$', 2);
+        }
+
+        if(item.name == 'release_date' || item.name == 'first_air_date') {
+          itemValue = $filter('date')(itemValue, 'yyyy');
         }
 
         if(details[item.name]) {
@@ -538,9 +555,9 @@ const getPersonTvData = (app, id, callback) => {
   });
 }
 
-const getPersonSimilarData = (app, id, callback) => {
+const getSimilarData = (app, id, type, callback) => {
   fetch(
-    'https://api.themoviedb.org/3/person/' + id + '/tv_credits?api_key=' + app.apiKey,
+    'https://api.themoviedb.org/3/' + type + '/' + id + '/similar?api_key=' + app.apiKey,
     {method: 'GET'}
   )
   .then((response) => {
@@ -554,7 +571,7 @@ const getPersonSimilarData = (app, id, callback) => {
   });
 }
 
-/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData});
+/* harmony default export */ __webpack_exports__["a"] = ({getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData});
 
 
 /***/ }),

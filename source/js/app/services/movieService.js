@@ -78,9 +78,9 @@ const getPersonTvData = (app, id, callback) => {
   });
 }
 
-const getPersonSimilarData = (app, id, callback) => {
+const getSimilarData = (app, id, type, callback) => {
   fetch(
-    'https://api.themoviedb.org/3/person/' + id + '/tv_credits?api_key=' + app.apiKey,
+    'https://api.themoviedb.org/3/' + type + '/' + id + '/similar?api_key=' + app.apiKey,
     {method: 'GET'}
   )
   .then((response) => {
@@ -94,4 +94,4 @@ const getPersonSimilarData = (app, id, callback) => {
   });
 }
 
-export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData};
+export default {getSearchResults, getItemData, getItemCreditsData, getPersonMovieData, getPersonTvData, getSimilarData};

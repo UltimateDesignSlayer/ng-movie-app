@@ -18,7 +18,7 @@
           <div class="details__more-info">
             <h1>{{title}}</h1>
           </div>
-          <div class="details__more-info" ng-if="details.type == 'movie'">
+          <div class="details__more-info" ng-if="details.type != 'person'">
             <div>
               <h3 class="info__tagline" ng-if="details.tagline">"{{details.tagline}}"</h3>
               <dl class="details__summary-list dl-horizontal">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <div class="details__heading visible-xs row">
+    <div class="details__heading visible-xs row" ng-if="details.type != 'person'">
       <div class="col-xs-12">
         <h1>{{title}}</h1>
         <h3 class="info__tagline" ng-if="details.tagline">"{{details.tagline}}"</h3>
@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <div ng-if="details.type == 'movie'">
+  <div ng-if="details.type != 'person'">
     <div class="person-movies">
       <h3>Cast</h3>
       <div ng-if="!creditCastData">
@@ -74,7 +74,7 @@
       <div class="person-movies__list" ng-if="creditCastData">
         <div class="person-movies__item" ng-repeat="cast in creditCastData">
           <div class="person-movies__img-wrapper">
-            <img ng-src="{{creditImageSize + cast.profile_path}}" ng-if="cast.profile_path" />
+            <img ng-src="{{posterImg92 + cast.profile_path}}" ng-if="cast.profile_path" />
             <div class="person-movies__placeholder" ng-if="!cast.profile_path">
             </div>
           </div>
@@ -98,7 +98,7 @@
       <div class="person-movies__list" ng-if="creditCrewData">
         <div class="person-movies__item" ng-repeat="crew in creditCrewData">
           <div class="person-movies__img-wrapper">
-            <img ng-src="{{creditImageSize + crew.profile_path}}" ng-if="crew.profile_path" />
+            <img ng-src="{{posterImg92 + crew.profile_path}}" ng-if="crew.profile_path" />
             <div class="person-movies__placeholder" ng-if="!crew.profile_path"></div>
           </div>
           <div class="person-movies__details">
@@ -112,6 +112,31 @@
         </div>
       </div>
     </div>
+
+    <div class="person-movies">
+      <h3>Similar</h3>
+      <div ng-if="!similarData">
+        <p>No similar information.</p>
+      </div>
+      <div class="person-movies__list" ng-if="similarData">
+        <div class="person-movies__item" ng-repeat="item in similarData">
+          <div class="person-movies__img-wrapper">
+            <img ng-src="{{posterImg92 + item.poster_path}}" ng-if="item.poster_path" />
+            <div class="person-movies__placeholder" ng-if="!item.poster_path"></div>
+          </div>
+          <div class="person-movies__details">
+            <div class="person-movies__title">
+              {{item.name || item.title}}
+            </div>
+            <div class="person-movies__character">
+              {{(item.first_air_date || item.release_date) | date:'yyyy'}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <div ng-if="details.type == 'person'">
@@ -123,7 +148,7 @@
       <div class="person-movies__list" ng-if="personMovies">
         <div class="person-movies__item" ng-repeat="movie in personMovies">
           <div class="person-movies__img-wrapper">
-            <img ng-src="{{personMoviePosterSize + movie.poster_path}}" ng-if="movie.poster_path" />
+            <img ng-src="{{posterImg92 + movie.poster_path}}" ng-if="movie.poster_path" />
             <div class="person-movies__placeholder" ng-if="!movie.poster_path">
             </div>
           </div>
@@ -147,7 +172,7 @@
       <div class="person-movies__list" ng-if="personTV">
         <div class="person-movies__item" ng-repeat="tv in personTV">
           <div class="person-movies__img-wrapper">
-            <img ng-src="{{personTVPosterSize + tv.poster_path}}" ng-if="tv.poster_path" />
+            <img ng-src="{{posterImg92 + tv.poster_path}}" ng-if="tv.poster_path" />
             <div class="person-movies__placeholder" ng-if="!tv.poster_path">
             </div>
           </div>
